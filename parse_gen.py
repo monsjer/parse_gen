@@ -194,7 +194,7 @@ def generate_script():
 		pass
 	#final_script_list.reverse()
 	count_file = 0
-	os.chdir('C:/Users/IABogdanov/Documents/py/gen_scripts/')
+	os.chdir('../gen_scripts/')
 	files_in_dir = os.listdir()
 	while str('S_' + str(count_file) + '_' + str(get_output_name())) in files_in_dir:
 		count_file += 1
@@ -224,6 +224,6 @@ def get_string() -> str:
 
 #rstring = re.sub('[,]\w*=\w*\d*[,;]+', ',TRXID=3413', tstring)
 #---------------main----------------
-os.chdir('C:/Users/IABogdanov/Documents/py/files/')
+os.chdir('./files/')
 generate_script()
 
