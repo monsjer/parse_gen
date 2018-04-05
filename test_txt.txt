@@ -1,3 +1,0 @@
-'TRXID':				'((TRX)[-_\s]*?(ID))',\
-'RNCID':				'((^RNC)[-_\s\S]*?(ID$))',\
-'CELLID':				'((^CELL)[-_\s]*?(ID$))',\
