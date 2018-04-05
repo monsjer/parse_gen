@@ -1,13 +1,11 @@
 import openpyxl
-import pyperclip
 import re
 import sys
 import os
 import datetime
-from pprint import pprint
 
 
-
+#Чтение xlsx-файла
 def read_file() -> dict:
 	
 	print('Имя файла или Enter(input.xlsx - по умолчанию)')
@@ -29,7 +27,8 @@ def read_file() -> dict:
 	sheet_dict = {'sheet_obj': sheet,'max_row': sheet.max_row, 'max_column': sheet.max_column}
 	
 	return sheet_dict
-	
+
+#Преобразование xlsx-файла в словарь	
 def compile_table() -> dict:
 	sheet = read_file()
 	header_alias = alias_dict()
@@ -55,6 +54,7 @@ def compile_table() -> dict:
 	table_dict['len_of_element_list'] = sheet.get('max_row') - 1
 	return table_dict.copy()	
 
+#Создание словаря шаблонов, по которым ищутся совпадения с параметрами команды
 def alias_dict() -> dict:
 	os.chdir('..')
 	file = open('regex_template.txt', 'r')
@@ -64,7 +64,7 @@ def alias_dict() -> dict:
 		regex = re.compile(line, re.IGNORECASE)
 		match_key = re.search("'(\w*)'",line)
 		match_value = re.search('\(.*\)',line)
-		#print(match_key.group() + 'and ' + match_value.group())
+
 		try:
 			rmatch_value = str(match_value.group())
 			header_alias[match_key.group(1)] = rmatch_value.replace("\\\\",'\\')
@@ -73,7 +73,7 @@ def alias_dict() -> dict:
 	
 	return header_alias
 	
-
+#Создание скриптов на основе всех входных данных
 def generate_script():
 	
 	table_dict = compile_table()
@@ -117,12 +117,15 @@ def generate_script():
 			f.write(final_script_list[i] + '\n')
 		print('OK')
 	f.close
+
+#Получить имя файла с готовыми командами
 def get_output_name() -> str:#прописать исключение вместо if/else
 	#c_date = 'default ' + str(datetime.date.today()) + '.txt'
 	c_date = str(datetime.date.today()) + '.txt'
 		
 	return c_date
-	
+
+#Получить входную команду	
 def get_string() -> str:
 	print('\nКоманда: ')
 	input_string = input()
